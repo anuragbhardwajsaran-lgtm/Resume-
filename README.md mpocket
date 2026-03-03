@@ -3,3 +3,31 @@ terraform/
 ├── variables.tf
 ├── outputs.tf
 └── assume.json
+provider "aws" {
+  region = "us-east-1"
+}
+
+# -----------------------------
+# ECR Repository
+# -----------------------------
+resource "aws_ecr_repository" "repo" {
+  name = var.service_name
+
+  tags = {
+    Service = var.service_name
+    Team    = var.team_name
+  }
+}
+
+# -----------------------------
+# IAM Role
+# -----------------------------
+resource "aws_iam_role" "service_role" {
+  name               = "${var.service_name}-role"
+  assume_role_policy = file("${path.module}/assume.json")
+
+  tags = {
+    Service = var.service_name
+    Team    = var.team_name
+  }
+}
