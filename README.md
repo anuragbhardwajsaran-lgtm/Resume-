@@ -1,2 +1,0 @@
-# Resume-
-Anurag Bhardwaj Cvs
